@@ -6,7 +6,7 @@ const RecolherLixo = (objLixo) => {
     let CotaDeLixo = false;
     let premio = 0;
 
-    // Regras de negócio conforme a tabela do desafio
+   
     if (qtdLixo < 1000) {
         CotaDeLixo = true;
     } else if (qtdLixo >= 1000 && qtdLixo < 10000) {
@@ -24,7 +24,7 @@ const RecolherLixo = (objLixo) => {
     return {
         valor: ValordoLixo,
         premiodolixo: premio,
-        cotaAbaixo: CotaDeLixo, // Passamos essa informação para saber o que imprimir
+        cotaAbaixo: CotaDeLixo, 
         total: ResultadoFinal
     };
 };
@@ -60,7 +60,7 @@ const listEmpresas = () => {
         const valorFormatado = resultCalculo.valor.toFixed(2).replace('.', ',');
         const resultadoEnd = resultCalculo.total.toFixed(2).replace('.', ',');
         
-        // Verifica se bateu a meta para decidir entre o valor em R$ ou o Texto
+
         let textoPremio;
         if (resultCalculo.cotaAbaixo) {
             textoPremio = "Não atingiu";
@@ -78,4 +78,4 @@ const listEmpresas = () => {
             </tr>
         `;
     });
-};
+}
