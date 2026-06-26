@@ -26,28 +26,28 @@ const addEmpresa = (objLixo) => {
 };
 
 const listEmpresas = () => {
-    tbodyLista.innerHTML = '';
+    tabela.innerHTML = '';
 
     empresas.forEach((elem, i) => {
         const resultCalculo = RecolherLixo(elem);
 
         const valorFormatado = resultCalculo.valor.toFixed(2).replace('.', ',');
         const PremioFormatado = resultCalculo.premiodolixo.toFixed(2).replace('.', ',');
-
         const resultadoEnd = resultCalculo.total.toFixed(2).replace('.', ',');
 
-        tbodyLista.innerHTML += `
+        // Substitua tbodyLista por tabela novamente
+        tabela.innerHTML += `
             <tr>
                 <td>${elem.nome}</td>
                 <td>${elem.lixo}</td>
                 <td>${valorFormatado}</td>
                 <td>${PremioFormatado}</td>
                 <td>${resultadoEnd}</td>
-                </tr>
-
-                 `;
+            </tr>
+        `;
+    });
+}
     
-    }
-        )}
+
     
     
