@@ -12,8 +12,9 @@ FormEmpresa.addEventListener('submit',(evt) => {
     const dadosEmpresa = new FormData(FormEmpresa);
 
     const empresa = {
-        nome: dadosEmpresa.get('nome')
-        lixo: dadosEmpresa.get(lixo)
+
+        nome: dadosEmpresa.get('nome'),
+        lixo: dadosEmpresa.get('lixo')
     };
     addEmpresa(empresa);
     FormEmpresa.reset();
@@ -34,4 +35,19 @@ const listEmpresas = () => {
         const PremioFormatado = resultCalculo.premiodolixo.toFixed(2).replace('.', ',');
 
         const resultadoEnd = resultCalculo.total.toFixed(2).replace('.', ',');
-}
+
+        tbodyLista.innerHTML += `
+            <tr>
+                <td>${elem.nome}</td>
+                <td>${elem.lixo}</td>
+                <td>${valorFormatado}</td>
+                <td>${PremioFormatado}</td>
+                <td>${resultadoEnd}</td>
+                </tr>
+
+                 `;
+    
+    }
+        )}
+    
+    
