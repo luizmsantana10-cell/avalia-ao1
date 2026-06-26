@@ -1,30 +1,30 @@
-
 const RecolherLixo = (objLixo) => {
     const TonLixo = 220;
-    const ValordoLixo = TonLixo * parseInt(objLixo.lixo);
+    const qtdLixo = parseInt(objLixo.lixo); 
+    const ValordoLixo = TonLixo * qtdLixo;
 
     let CotaDeLixo = false;
     let premio = 0;
 
-    if (objLixo.lixo < 1000) {
+    // Regras de negócio conforme a tabela do desafio
+    if (qtdLixo < 1000) {
         CotaDeLixo = true;
+    } else if (qtdLixo >= 1000 && qtdLixo < 10000) {
+        premio = ValordoLixo * 0.08;
+    } else if (qtdLixo >= 10000 && qtdLixo < 15000) {
+        premio = ValordoLixo * 0.10;
+    } else if (qtdLixo >= 15000 && qtdLixo < 25000) {
+        premio = ValordoLixo * 0.15;
     } else {
-        if(objLixo.lixo >= 1000 && objLixo.lixo < 10000 ){
-            premio = ValordoLixo * 0.08;
-        } else if(objLixo.lixo >= 10000 && objLixo.lixo < 15000){
-            premio = ValordoLixo * 0.10;
-        } else if(objLixo.lixo >= 15000 && objLixo.lixo < 25000){
-            premio = ValordoLixo * 0.15;
-        } else{
-            premio = ValordoLixo * 0.20;
-        }
+        premio = ValordoLixo * 0.20;
     }
 
-    const ResultadoFinal = ValordoLixo + (CotaDeLixo ? 0 : premio);
+    const ResultadoFinal = ValordoLixo + premio;
 
     return {
         valor: ValordoLixo,
-        premiodolixo: CotaDeLixo ? 0 : premio,
+        premiodolixo: premio,
+        cotaAbaixo: CotaDeLixo, // Passamos essa informação para saber o que imprimir
         total: ResultadoFinal
     };
 };
@@ -35,11 +35,9 @@ const empresas = [];
 
 FormEmpresa.addEventListener('submit', (evt) => {
     evt.preventDefault();
-
     const dadosEmpresa = new FormData(FormEmpresa);
-
+    
     const empresa = {
-
         nome: dadosEmpresa.get('nome'),
         lixo: dadosEmpresa.get('lixo')
     };
@@ -60,15 +58,22 @@ const listEmpresas = () => {
         const resultCalculo = RecolherLixo(elem);
 
         const valorFormatado = resultCalculo.valor.toFixed(2).replace('.', ',');
-        const PremioFormatado = resultCalculo.premiodolixo.toFixed(2).replace('.', ',');
         const resultadoEnd = resultCalculo.total.toFixed(2).replace('.', ',');
+        
+        // Verifica se bateu a meta para decidir entre o valor em R$ ou o Texto
+        let textoPremio;
+        if (resultCalculo.cotaAbaixo) {
+            textoPremio = "Não atingiu";
+        } else {
+            textoPremio = "R$ " + resultCalculo.premiodolixo.toFixed(2).replace('.', ',');
+        }
 
         tabela.innerHTML += `
             <tr>
                 <td>${elem.nome}</td>
                 <td>${elem.lixo}</td>
                 <td>R$ ${valorFormatado}</td>
-                <td>R$ ${PremioFormatado}</td>
+                <td>${textoPremio}</td>
                 <td>R$ ${resultadoEnd}</td>
             </tr>
         `;
